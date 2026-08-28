@@ -2,14 +2,11 @@
 #include <iostream>
 #include <algorithm>
 
+#include "configuration.hpp"
+
+using VoiceChat::Configuration::App;
+
 int main()
 {
-    using namespace boost::lambda;
-    typedef std::istream_iterator<int> in;
-
-    std::cout << "Enter numbers: ";
-
-    // Read a sequence of integers from standard input, use Boost.Lambda to multiply each number by three, then write it to the standard output
-    std::for_each(
-        in(std::cin), in(), std::cout << (_1 * 3) << " ");
+    App::get().loadConfiguration();
 }
