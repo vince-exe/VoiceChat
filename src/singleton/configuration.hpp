@@ -6,79 +6,53 @@
 #include <filesystem>
 #include <boost/json.hpp>
 
-using namespace boost::json;
+namespace App
+{
+    class ConfigManager {
+    private:
+        boost::json::object m_configObj;
 
-namespace VoiceChat {
-    namespace Config {
-        class App {
-            private:
-                object m_configObj;
-                object m_serverObj;
+        ConfigManager() {}
 
-                std::string readConfiguration() {
-                    std::ifstream ifs;
-                    std::string str;
-                    
-                    ifs.open("config.json", std::ios::in);
+        std::string readConfiguration() {
+            std::ifstream ifs;
+            std::string str;
 
-                    if(!ifs) //TO-DO: Utilizzare log e gestire errore
-                        std::cout << "[ERROR]: Can't read configuration file" << std::endl;
+            ifs.open("config.json", std::ios::in);
 
-                    std::string line;
-                    std::string fileContent;
+            if (!ifs) // TODO: Utilizzare log e gestire errore
+                std::cout << "[ERROR]: Can't read configuration file" << std::endl;
 
-                    while(std::getline(ifs, line)) {
-                        fileContent.append(line);
-                    }
-                    ifs.close();
+            std::string line;
+            std::string fileContent;
 
-                    return fileContent;
-                }
+            while (std::getline(ifs, line))
+                fileContent.append(line);
+            
+            ifs.close();
 
-                App() {}
-                App(App const&);
-                void operator=(App const&);
+            return fileContent;
+        }
 
-            public:
-                App(App const&) = delete;
-                App(const App&) = delete;
-                App& operator=(const App&) = delete;
+    public:
+        ConfigManager(ConfigManager const &) = delete;
+        ConfigManager &operator=(const ConfigManager &) = delete;
 
-                static App& get() {
-                    static App istance;
-                    return istance;
-                }
-                
-                // * This method has to be called once at the program start
-                void loadConfiguration() {                    
-                    boost::system::error_code ec;
-                    value jsonParsed = parse(readConfiguration(), ec);
-                    if(ec) { // TODO: Utilizzare log e gestire errore
-                        std::cout << "[ERROR]: Parsing failed: " << ec.message() << std::endl;
-                    }
-                    
-                    auto parsedObject = jsonParsed.if_object();
-                    if(!parsedObject) { // TODO: Utilizzare log e gestire errore
-                        std::cout << "[ERROR]: Invalid JSON expected an object" << std::endl;
-                    }
-                    
-                    m_configObj = *parsedObject;
-                    m_serverObj = m_configObj.at("Server");
-                }   
+        static ConfigManager &get() {
+            static ConfigManager istance;
+            return istance;
+        }
 
-                int getPort() const { 
-                    /*
-                    const object& serverVal = m_configObj.at("Server");
+        // * This method has to be called once at the program start
+        void loadConfiguration() {
+            boost::system::error_code ec;
+            boost::json::value jsonParsed = boost::json::parse(readConfiguration());
 
-                    value v = (const) m_configObj["port"];
-                    if(!v.is_int64())
-                        throw std::runtime_error("value is not an integer");
-                    
-                    return v.as_int64();
-                    */
+            m_configObj = jsonParsed.try_as_object().value();
+        }
 
-                    return 0;
-                }
-        };
-    }
+        const std::int64_t &getPort() {
+            return m_configObj.at("Server").at("port").try_as_int64().value();
+        }
+    };
 }

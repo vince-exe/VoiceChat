@@ -1,10 +1,15 @@
 #include "configuration.hpp"
-
-using VoiceChat::Config::App;
+#include <boost/asio.hpp>
 
 int main()
 {
-    App::get().loadConfiguration();
+    try {
+        App::ConfigManager::get().loadConfiguration();
+    }
+    catch(const boost::system::system_error& err) {
+        std::cerr << err.code() << ": " << err.what() << std::endl;
+        return -1;
+    } 
     
-    std::cout << "Server port: " << App::get().getPort() << std::endl;
+    std::cout << "Server port: " << App::ConfigManager::get().getPort() << std::endl;
 }
