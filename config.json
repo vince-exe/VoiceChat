@@ -1,5 +1,6 @@
 {
     "Server": {
-        "port": 9980
+        "port": 9980,
+        "maxConnections": 10
     }
 }

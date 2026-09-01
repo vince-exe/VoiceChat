@@ -54,5 +54,9 @@ namespace App
         const std::int64_t &getPort() {
             return m_configObj.at("Server").at("port").try_as_int64().value();
         }
+
+        const std::int64_t &getMaxConnections() {
+            return m_configObj.at("Server").at("maxConnections").try_as_int64().value();
+        }
     };
 }

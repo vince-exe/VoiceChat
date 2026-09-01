@@ -1,5 +1,13 @@
-#include "configuration.hpp"
+#include <iostream>
 #include <boost/asio.hpp>
+#include <boost/asio/ip/tcp.hpp>
+#include <boost/json/src.hpp>
+#include <boost/asio/co_spawn.hpp>
+#include <boost/asio/detached.hpp>
+#include <boost/asio/io_context.hpp>
+
+#include "configuration.hpp"
+#include "server.hpp"
 
 int main()
 {
@@ -11,5 +19,6 @@ int main()
         return -1;
     } 
     
-    std::cout << "Server port: " << App::ConfigManager::get().getPort() << std::endl;
+    App::Server server;
+    co_spawn(server.listen());
 }
