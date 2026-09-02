@@ -1,9 +1,9 @@
 #pragma once
 
 #include <iostream>
+#include <cstdint>
 #include <boost/asio.hpp>
 #include <boost/asio/ip/tcp.hpp>
-#include <boost/json/src.hpp>
 #include <boost/asio/co_spawn.hpp>
 #include <boost/asio/detached.hpp>
 #include <boost/asio/io_context.hpp>
@@ -16,10 +16,10 @@ using boost::asio::awaitable;
 namespace App {
     class Server {
         private:
-            std::uint64_t m_port;
-            std::uint64_t m_activeConnections;
-            std::uint64_t m_maxConnections;
-
+            std::uint_least16_t m_port;
+            std::uint_least16_t m_maxConnections;
+            std::uint_least16_t m_activeConnections;
+        
         public:
             Server();
 

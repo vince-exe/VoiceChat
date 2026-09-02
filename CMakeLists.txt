@@ -14,10 +14,11 @@ configure_file(
 
 add_executable(VoiceChat 
 main.cpp
-src/src/server.cpp)
+src/src/server.cpp
+src/singleton/configuration.cpp)
 
 target_include_directories(VoiceChat PRIVATE 
 src/include
-src/singleton)
+src/singleton/include)
 
 target_link_libraries(VoiceChat Boost::headers)
