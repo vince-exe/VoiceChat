@@ -17,6 +17,8 @@ int main()
 
         boost::asio::io_context io_context(1);
         co_spawn(io_context, server.listen(), boost::asio::detached);
+
+        io_context.run();
     }
     catch(const boost::system::system_error& err) {
         std::cerr << err.code() << ": " << err.what() << std::endl;

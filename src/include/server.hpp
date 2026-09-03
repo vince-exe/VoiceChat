@@ -16,7 +16,7 @@ using boost::asio::awaitable;
 namespace App {
     class Server {
         private:
-            std::uint_least16_t m_port;
+            boost::asio::ip::port_type m_port;
             std::uint_least16_t m_maxConnections;
             std::uint_least16_t m_activeConnections;
         
