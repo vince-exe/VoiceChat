@@ -15,13 +15,16 @@ awaitable<void> App::Server::listen() {
         m_activeConnections++;
 
         tcp::socket connection = co_await acceptor.async_accept();
-        co_spawn(executor, write(std::move(connection)), boost::asio::detached);
+        co_spawn(executor, _handleVCOption(std::move(connection)), boost::asio::detached);
     }
 }
 
-awaitable<void> App::Server::write(tcp::socket socket)
+awaitable<void> App::Server::_handleVCOption(tcp::socket socket)
 {
-    auto remoteEndpoint = socket.remote_endpoint();
+    while(true) {
+        char buffer[1024];
 
-    std::cout<<"IP client connesso: " << remoteEndpoint.address() << std::endl;
+        std::size_t n = co_await socket.async_read_some(boost::asio::buffer(buffer));
+        std::cout << "Messaggio ricevuto: " << buffer << std::endl;
+    }
 }

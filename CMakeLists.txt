@@ -13,12 +13,12 @@ configure_file(
 ) #sposta il file di configurazione vicino all'eseguibile
 
 add_executable(VoiceChat 
-main.cpp
-src/src/server.cpp
-src/singleton/configuration.cpp)
+server/src/src/main_server.cpp
+server/src/src/server.cpp
+server/src/singleton/configuration.cpp)
 
 target_include_directories(VoiceChat PRIVATE 
-src/include
-src/singleton/include)
+server/src/include
+server/src/singleton/include)
 
 target_link_libraries(VoiceChat Boost::headers)
