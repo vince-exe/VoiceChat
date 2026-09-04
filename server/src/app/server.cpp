@@ -15,16 +15,16 @@ awaitable<void> App::Server::listen() {
         m_activeConnections++;
 
         tcp::socket connection = co_await acceptor.async_accept();
-        co_spawn(executor, _handleVCOption(std::move(connection)), boost::asio::detached);
+        co_spawn(executor, _handleClientReq(std::move(connection)), boost::asio::detached);
     }
 }
 
-awaitable<void> App::Server::_handleVCOption(tcp::socket socket)
+awaitable<void> App::Server::_handleClientReq(tcp::socket socket)
 {
     while(true) {
-        char buffer[1024];
-
+        char buffer[4000];
         std::size_t n = co_await socket.async_read_some(boost::asio::buffer(buffer));
+
         std::cout << "Messaggio ricevuto: " << buffer << std::endl;
     }
 }

@@ -20,7 +20,7 @@ namespace App {
             std::uint_least16_t m_maxConnections;
             std::uint_least16_t m_activeConnections;
 
-            awaitable<void> _handleVCOption(tcp::socket socket);
+            awaitable<void> _handleClientReq(tcp::socket socket);
 
         public:
             Server();
