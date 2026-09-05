@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28.3)
-project(VoiceChat-Server)
+project(VoiceChat)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -15,14 +15,28 @@ configure_file(
     COPYONLY
 ) #sposta il file di configurazione vicino all'eseguibile
 
+########## SERVER ##########
 add_executable(VoiceChat-Server 
-src/app/main_server.cpp
-src/app/server.cpp
-src/singleton/configuration.cpp
+server/src/app/main_server.cpp
+server/src/app/server.cpp
+server/src/singleton/configuration.cpp
 )
 
 target_include_directories(VoiceChat-Server PRIVATE 
-src/include
-src/singleton/include)
+server/src/include
+server/src/singleton/include)
 
 target_link_libraries(VoiceChat-Server Boost::headers)
+##########
+
+
+########## CLIENT ##########
+add_executable(VoiceChat-Client 
+client/src/app/main_client.cpp
+)
+
+target_include_directories(VoiceChat-Client PRIVATE 
+client/src/include
+)
+
+target_link_libraries(VoiceChat-Client Boost::headers)
