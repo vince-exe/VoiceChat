@@ -20,11 +20,13 @@ add_executable(VoiceChat-Server
 server/src/app/main_server.cpp
 server/src/app/server.cpp
 server/src/singleton/configuration.cpp
+common/netpacket.cpp
 )
 
 target_include_directories(VoiceChat-Server PRIVATE 
 server/src/include
-server/src/singleton/include)
+server/src/singleton/include
+common/include)
 
 target_link_libraries(VoiceChat-Server Boost::headers)
 ##########
@@ -33,10 +35,15 @@ target_link_libraries(VoiceChat-Server Boost::headers)
 ########## CLIENT ##########
 add_executable(VoiceChat-Client 
 client/src/app/main_client.cpp
+client/src/app/client.cpp
+common/netpacket.cpp
 )
 
 target_include_directories(VoiceChat-Client PRIVATE 
 client/src/include
+common/include
 )
 
 target_link_libraries(VoiceChat-Client Boost::headers)
+
+##########

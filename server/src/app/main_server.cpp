@@ -7,10 +7,10 @@
 
 #include "configuration.hpp"
 #include "server.hpp"
+#include "common.hpp"
 
 int main()
 {
-    /*
     try {
         App::ConfigManager::get().loadConfiguration();
         
@@ -28,6 +28,6 @@ int main()
     catch(std::exception& e) {
         std::cout<< "Exception: " << e.what() << std::endl;
     }
-    */
+    
     return 0;
 }
