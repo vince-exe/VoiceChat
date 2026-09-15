@@ -1,5 +1,12 @@
 #include "client.hpp"
 
-VoiceChat::Client::Client() {
-    
+VoiceChat::Client::Client(boost::asio::io_context& io_context, std::string ip, boost::asio::ip::port_type port) :
+m_socket(io_context), m_ip(ip), m_port(port) { }
+
+awaitable<void> VoiceChat::Client::asyncConnect() {
+    tcp::endpoint endpoint(boost::asio::ip::make_address(m_ip), m_port);
+
+    m_socket.async_connect(endpoint, [&](boost::system_error_code ec) {
+        std::cout << "Avviato tentativo di connessione" << std::endl;
+    });
 }
