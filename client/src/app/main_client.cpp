@@ -9,6 +9,7 @@
 
 int main() {
     std::string ip; boost::asio::ip::port_type port;
+    boost::asio::io_context io_context;
 
     std::cout << "Inserisci l'ip: ";
     std::cin >> ip;
@@ -16,14 +17,16 @@ int main() {
     std::cout << "Inserisci la porta: ";
     std::cin >> port;
 
-    std::cout << "Ip: " << ip << " Porta: " << port;
-
-    boost::asio::io_context io_context;
-
     VoiceChat::Client client(io_context, ip, port);
-    co_spawn(io_context, client.asyncConnect(), boost::asio::detached);
-    
-    io_context.run();
+
+    try {
+        client.asyncConnect();
+
+        io_context.run();
+    }
+    catch(boost::system::system_error& e) {
+        std::cerr << e.what() << std::endl;
+    }
 
     return 0;
 }
