@@ -22,6 +22,6 @@ namespace VoiceChat {
         public:
             Client(boost::asio::io_context& io_context, std::string ip, boost::asio::ip::port_type port);
             
-            void asyncConnect();
+            awaitable<void> asyncConnect();
     };
 }

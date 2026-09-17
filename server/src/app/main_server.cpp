@@ -11,6 +11,7 @@
 
 int main()
 {
+    
     try {
         App::ConfigManager::get().loadConfiguration();
         
