@@ -1,13 +1,10 @@
-cmake_minimum_required(VERSION 3.28.3)
+cmake_minimum_required(VERSION 3.30)
 project(VoiceChat)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(BOOST_ROOT "/home/vince/myLibs/boost_1_92_0")
-set(BOOST_INCLUDEDIR "/home/vince/myLibs/boost_1_92_0/include")
-
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED CONFIG)
 
 configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/config.json"
