@@ -15,12 +15,12 @@ int main() {
 
     std::cout << "Inserisci la porta: ";
     std::cin >> port;
-
+    
     try {
         boost::asio::io_context io_context(1);
         VoiceChat::Client client(io_context, ip, port);
 
-        co_spawn(io_context, client.asyncConnect(), boost::asio::detached);
+        co_spawn(io_context, client.run(), boost::asio::detached);
         
         io_context.run();
 

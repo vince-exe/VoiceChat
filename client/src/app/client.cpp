@@ -6,6 +6,20 @@ awaitable<void> VoiceChat::Client::asyncConnect() {
     tcp::endpoint endpoint(boost::asio::ip::make_address(m_ip), m_port);
 
     co_await m_socket.async_connect(endpoint);
+    
+    std::cout << "Connessione riuscita!" << std::endl;    
+}
 
-    std::cout << "aspettando la connessione" << std::endl;
+awaitable<void> VoiceChat::Client::run() {
+    co_await asyncConnect();
+
+    NetPacket packet(NetPacket::Header::Comunication, "Client Vincenzo Caliendo wow!!");
+    const std::vector<uint8_t> data = packet.serialize();
+
+    m_socket.async_send(boost::asio::buffer(data, data.size()), [&](const boost::system::error_code& error, std::size_t bytes_transferred) {
+        if(error)
+            std::cout<<"Error nel send: " << error.message() << std::endl;
+
+        std::cout << "Byte trasferred: " << bytes_transferred << std::endl;
+    });
 }

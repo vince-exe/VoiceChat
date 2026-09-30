@@ -17,8 +17,12 @@ namespace VoiceChat {
         
         NetPacket(Header header, std::vector<uint8_t> body);
         
-        const std::vector<uint8_t> serialize() const;
+        NetPacket(Header header, std::string string);
 
+        const std::vector<uint8_t> serialize() const;
+        
+        static const NetPacket deserialize(const std::vector<uint8_t> data);
+        
         private:
             Header m_header;
             std::vector<uint8_t> m_body;

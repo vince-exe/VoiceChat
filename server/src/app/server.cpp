@@ -21,8 +21,10 @@ awaitable<void> App::Server::listen() {
 
 awaitable<void> App::Server::_handleClientReq(tcp::socket socket)
 {
+    std::vector<uint8_t> buffer(128);
+    
     while(true) {
-        char buffer[4000];
+        
         std::size_t n = co_await socket.async_read_some(boost::asio::buffer(buffer));
 
         std::cout << "Messaggio ricevuto: " << buffer << std::endl;
