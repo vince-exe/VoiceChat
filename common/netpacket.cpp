@@ -20,17 +20,16 @@ const std::vector<uint8_t> VoiceChat::NetPacket::serialize() const
     std::vector<uint8_t> serializeVec;
 
     serializeVec.push_back(static_cast<uint8_t>(m_header));
+    serializeVec.insert(serializeVec.begin(), );
 
     return serializeVec;
 }
 
-const VoiceChat::NetPacket VoiceChat::NetPacket::deserialize(const std::vector<uint8_t> data)
+const VoiceChat::NetPacket VoiceChat::NetPacket::deserialize(const std::vector<uint8_t> serialized)
 {
-    uint8_t* arr = data.data();
+    NetPacket::Header header = static_cast<NetPacket::Header>(serialized.front());
 
-    NetPacket::Header header;
+    std::vector<uint8_t> body(&serialized[1], &serialized[serialized.size() - 1]);
 
-    header = 
-
-    // TODO: insert return statement here
+    return NetPacket(header, body);
 }
